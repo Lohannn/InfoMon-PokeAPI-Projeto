@@ -1,0 +1,117 @@
+:root {
+    --primary-color: #2C2C2C;
+    --secondary-color: #000;
+    --principal-color: #F2DA03;
+}
+
+body {
+    max-height: 100vh;
+    background-color: var(--secondary-color);
+    display: grid;
+    grid-template-rows: 100px 1fr;
+}
+
+header {
+    background-color: var(--primary-color);
+    padding: 17px;
+    display: grid;
+    place-items: center;
+}
+
+.main {
+    max-height: 100%;
+}
+
+.logo {
+    width: 302.28px;
+    height: 65.34px;
+}
+
+.gameList-container {
+    width: 100%;
+    height: 100%;
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.barra_pesquisa {
+    font-family: 'Inter', sans-serif;
+    height: 45px;
+    width: 827px;
+    background-color: var(--primary-color);
+    border-radius: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px;
+    color: var(--principal-color);
+    overflow: hidden;
+    gap: 5px;
+}
+
+.fa-search {
+    font-size: 2.188rem;
+    padding-right: 5px;
+}
+
+.buscador{
+    border: 0px;
+    height: 100%;
+    width: 100%;
+    color: var(--secondary-color);
+    background-color: var(--primary-color);
+    color: var(--principal-color);
+    font-weight: 600;
+    font-size: 1.5rem;
+}
+
+textarea:focus, input:focus {
+    box-shadow: 0 0 0 0;
+    outline: 0;
+}
+
+.gen-selector {
+    height: 45px;
+    display: flex;
+    align-items: center;
+}
+
+.divisor {
+    width: 44px;
+    height: 0px;
+    border: 1px solid var(--principal-color);
+    transform: rotate(90deg);
+}
+
+.gen{
+    font-size: 1.25rem;
+    font-weight: 800;
+}
+
+.selector{
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+@media (max-width: 640px) {
+    body {
+        grid-template-rows: 50px 1fr;
+    }
+
+    .logo {
+        width: 154.37px;
+        height: 33.37px;
+    }
+
+
+    header {
+        padding: 5px;
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+    }
+}
