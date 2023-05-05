@@ -13,6 +13,7 @@
         href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&family=Maven+Pro:wght@400;500;600;700;800;900&display=swap"
         rel="stylesheet">
     <script src="https://kit.fontawesome.com/0cee75e41d.js" crossorigin="anonymous"></script>
+    <script src="./js/components.js" type="module" defer></script>
     <title>Infomon</title>
 </head>
 
@@ -24,15 +25,32 @@
         <div class="gameList-container">
             <div class="barra_pesquisa">
                 <i class="fas fa-search"></i>
-                <input type="text" class="buscador" id="buscador" maxLength="20">
+                <div class="buscador-container">
+                    <input type="text" class="buscador" id="buscador" maxLength="20">
+                    <div class="bordinha"></div>
+                </div>
+
                 <div class="gen-selector">
                     <div class="divisor"></div>
                     <div class="selector">
                         <p class="gen">GEN</p>
                         <i class="fas fa-chevron-down"></i>
                     </div>
-
                 </div>
+            </div>
+
+            <div class="topic">
+                Jogos
+            </div>
+
+            <div class="gameList" id="gameList">
+                <!-- <div class="game-card">
+                    <container class="infos">
+                        <h2 class="game-name">Red - Blue</h2>
+                        <h2 class="game-gen">GEN I</h2>
+                    </container>
+                </div> -->
+                <game name="Red - Blue" gen="GEN 1">
             </div>
         </div>
     </main>
