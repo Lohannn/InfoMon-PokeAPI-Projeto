@@ -1,38 +1,40 @@
 'use strict'
 
-import { getGenerationsList } from "./fetchs.js";
-import { getGenerationGames } from "./fetchs.js";
+import { getGames } from "./fetchs.js";
+import { getGameQuantity } from "./fetchs.js";
 
-const criaCard = ( produto ) => {
-    const card = document.createElement('div')
-    card.classList.add('card')
+const list = async function(){
+    let limit = await getGameQuantity()
+    let gameList = []
 
-    const photo = document.createElement('img')
-    photo.classList.add('card__image')
-    photo.src = `./img/${produto.image}`
+    for (let index = 1; index < limit.count; index++) {
+        let version = await getGames(index)
+        let game = {}
 
-    const title = document.createElement('h5')
-    title.classList.add('card__title')
-    title.textContent = produto.name
+        game.version = version.name
+        game.generation = version.generation
 
-    const description = document.createElement('p')
-    description.classList.add('card__description')
-    description.textContent = produto.description
+        gameList.push(game)
+    }
 
-    const price = document.createElement('span')
-    price.classList.add('card__price')
-    price.textContent = produto.price
+    return gameList
+}
 
-    card.append(photo, title, description, price)
+const createGameCards =  (game) => {
+    const card = document.createElement('game-card')
+    card.name = game.version.replace(/-/g, ' ')
+    card.gen = game.generation
 
     return card
 }
 
-const carregarProdutos = () => {
-    const container = document.getElementById('container')
-    const cards = produtos.map( criaCard )
-    
+const loadCards = async () => {
+    let gameList = await list()
+
+    const container = document.getElementById('gameList')
+    const cards = gameList.map(createGameCards)
+
     container.replaceChildren(...cards)
 }
 
-carregarProdutos()
+loadCards()

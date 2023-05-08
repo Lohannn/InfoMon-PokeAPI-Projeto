@@ -39,6 +39,12 @@ class card extends HTMLElement {
                 border-radius: 10px;
                 display: grid;
                 place-items: center;
+                transition: all .5s;
+            }
+
+            .game-card:hover{
+                color: var(--secondary-color);
+                background-color: var(--principal-color);
             }
             
             .infos {
@@ -46,11 +52,12 @@ class card extends HTMLElement {
                 flex-direction: column;
                 align-items: center;
                 justify-content: center;
+                text-align: center;
             }
             
             .game-name {
                 font-weight: 700;
-                font-size: 2.5rem;
+                font-size: 2rem;
             }
             
             .game-gen {
@@ -63,7 +70,7 @@ class card extends HTMLElement {
     }
 
     component() {
-        const card = document.createElement('div')
+        const card = document.createElement('a')
         card.classList.add('game-card')
         const infos = document.createElement('container')
         infos.classList.add('infos')
@@ -81,4 +88,4 @@ class card extends HTMLElement {
     }
 }
 
-customElements.define('game', card)
+customElements.define('game-card', card)

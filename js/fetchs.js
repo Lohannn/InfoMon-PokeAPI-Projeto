@@ -1,23 +1,28 @@
 'use strict'
 
-export const getGenerationsList = async function(){
-    const url = `https://pokeapi.co/api/v2/generation`
-    const response = await fetch(url)
-    const data = await response.json()
+const simpleGenerationName = (generation_name) => {
+    let name = generation_name.split('-')
+    let simplifiedName = name[0].slice(0, 3).toUpperCase()
+    return `${simplifiedName} ${name[1].toUpperCase()}`
+}
 
-    return data ={
-        count: data.count,
-        results: data.results
+export const getGames = async function(id){
+    const url = `https://pokeapi.co/api/v2/version-group/${id}`
+    const response = await fetch(url)
+    var data = await response.json()
+
+    return data = {
+        name: data.name,
+        generation: simpleGenerationName(data.generation.name)
     }
 }
 
-export const getGenerationGames = async function(GeneratiorNumber){
-    const url = `https://pokeapi.co/api/v2/generation/${GeneratiorNumber}/`
+export const getGameQuantity = async function(){
+    const url = `https://pokeapi.co/api/v2/version-group/`
     const response = await fetch(url)
-    const data = await response.json()
+    var data = await response.json()
 
     return data = {
-        id: data.id,
-        version_groups: data.version_groups
+        count: data.count
     }
 }
