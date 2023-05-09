@@ -28,10 +28,24 @@ const createGameCards =  (game) => {
     return card
 }
 
-const loadCards = async () => {
+function getContainer() {
+    return new Promise((resolve) => {
+      const checkContainer = () => {
+        const container = document.getElementById('gameList');
+        if (container) {
+          resolve(container);
+        } else {
+          setTimeout(checkContainer, 100);
+        }
+      };
+      checkContainer();
+    });
+  }
+
+export const loadCards = async () => {
     let gameList = await list()
 
-    const container = document.getElementById('gameList')
+    const container = await getContainer()
     const cards = gameList.map(createGameCards)
 
     container.replaceChildren(...cards)

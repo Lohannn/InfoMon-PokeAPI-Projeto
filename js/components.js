@@ -1,5 +1,7 @@
 'use strict'
 
+import './router.js'
+
 class card extends HTMLElement {
     constructor() {
         super()
@@ -28,6 +30,10 @@ class card extends HTMLElement {
                 margin: 0;
                 padding: 0;
                 box-sizing: border-box;
+            }
+
+            a{
+                text-decoration: none;
             }
 
             .game-card {
@@ -72,14 +78,19 @@ class card extends HTMLElement {
     component() {
         const card = document.createElement('a')
         card.classList.add('game-card')
+        card.addEventListener('click', route)
+        card.href = '/pokemon'
         const infos = document.createElement('container')
         infos.classList.add('infos')
+        infos.href = '/pokemon'
         const gameName = document.createElement('h2')
         gameName.classList.add('game-name')
-        gameName.textContent = this.name
+        gameName.textContent = this.name.replace(/&/g, '')
+        gameName.href = '/pokemon'
         const gameGen = document.createElement('h2')
         gameGen.classList.add('game-gen')
         gameGen.textContent = this.gen
+        gameGen.href = '/pokemon'
 
         card.append(infos)
         infos.append(gameName, gameGen)

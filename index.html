@@ -15,45 +15,18 @@
     <script src="https://kit.fontawesome.com/0cee75e41d.js" crossorigin="anonymous"></script>
     <script src="./js/components.js" type="module" defer></script>
     <script src="./js/gameList.js" type="module" defer></script>
+    <script src="./js/main.js" type="module" defer></script>
     <title>Infomon</title>
 </head>
 
 <body>
     <header>
-        <img src="./img/Logo.svg" alt="Logo do Site: InfoMon" class="logo">
+        <a href="/" onclick="route()">
+            <img src="./img/Logo.svg" alt="Logo do Site: InfoMon" class="logo">
+        </a>
     </header>
     <main id="root">
-        <div class="gameList-container">
-            <div class="barra_pesquisa">
-                <i class="fas fa-search"></i>
-                <div class="buscador-container">
-                    <input type="text" class="buscador" id="buscador" maxLength="20">
-                    <div class="bordinha"></div>
-                </div>
-
-                <div class="gen-selector">
-                    <div class="divisor"></div>
-                    <div class="selector">
-                        <p class="gen">GEN</p>
-                        <i class="fas fa-chevron-down"></i>
-                    </div>
-                </div>
-            </div>
-
-            <div class="topic">
-                Jogos
-            </div>
-
-            <div class="gameList" id="gameList">
-                <!-- <div class="game-card">
-                    <container class="infos">
-                        <h2 class="game-name">Red - Blue</h2>
-                        <h2 class="game-gen">GEN I</h2>
-                    </container>
-                </div> -->
-                <game-card name="Red - Blue" gen="GEN 1">
-            </div>
-        </div>
+        
     </main>
 </body>
 
