@@ -1,17 +1,23 @@
 'use strict'
 
-import './router.js'
+import '../router.js'
+
+const simpleGenerationName = (generation_name) => {
+    let name = generation_name.split('-')
+    let simplifiedName = name[0].slice(0, 3).toUpperCase()
+    return `${simplifiedName} ${name[1].toUpperCase()}`
+}
 
 class card extends HTMLElement {
     constructor() {
         super()
         this.shadow = this.attachShadow({ mode: 'open' })
         this.name = ''
-        this.gen = ''
+        this.region = ''
     }
 
     static get observedAttributes() {
-        return ['name', 'gen']
+        return ['name', 'region']
     }
 
     attributeChangedCallback(attribute, oldValue, newValue) {
@@ -36,7 +42,7 @@ class card extends HTMLElement {
                 text-decoration: none;
             }
 
-            .game-card {
+            .generation-card {
                 width: 282px;
                 height: 248px;
                 background-color: var(--primary-color);
@@ -48,7 +54,7 @@ class card extends HTMLElement {
                 transition: all .5s;
             }
 
-            .game-card:hover{
+            .generation-card:hover{
                 color: var(--secondary-color);
                 background-color: var(--principal-color);
             }
@@ -61,12 +67,12 @@ class card extends HTMLElement {
                 text-align: center;
             }
             
-            .game-name {
+            .generation-name {
                 font-weight: 700;
                 font-size: 2rem;
             }
             
-            .game-gen {
+            .generation-region {
                 font-weight: 800;
                 font-size: 2rem;
             }
@@ -77,26 +83,29 @@ class card extends HTMLElement {
 
     component() {
         const card = document.createElement('a')
-        card.classList.add('game-card')
-        card.addEventListener('click', route)
+        card.classList.add('generation-card')
+        card.addEventListener('click', (e) => {
+            localStorage.setItem('generation', this.name)
+            route(e)
+        })
         card.href = '/pokemon'
         const infos = document.createElement('container')
         infos.classList.add('infos')
         infos.href = '/pokemon'
-        const gameName = document.createElement('h2')
-        gameName.classList.add('game-name')
-        gameName.textContent = this.name.replace(/&/g, '')
-        gameName.href = '/pokemon'
-        const gameGen = document.createElement('h2')
-        gameGen.classList.add('game-gen')
-        gameGen.textContent = this.gen
-        gameGen.href = '/pokemon'
+        const generationName = document.createElement('h2')
+        generationName.classList.add('generation-name')
+        generationName.textContent = simpleGenerationName(this.name)
+        generationName.href = '/pokemon'
+        const generationRegion = document.createElement('h2')
+        generationRegion.classList.add('generation-region')
+        generationRegion.textContent = this.region
+        generationRegion.href = '/pokemon'
 
         card.append(infos)
-        infos.append(gameName, gameGen)
+        infos.append(generationName, generationRegion)
 
         return card
     }
 }
 
-customElements.define('game-card', card)
+customElements.define('generation-card', card)

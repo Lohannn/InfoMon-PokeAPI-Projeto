@@ -1,28 +1,54 @@
 'use strict'
 
-const simpleGenerationName = (generation_name) => {
-    let name = generation_name.split('-')
-    let simplifiedName = name[0].slice(0, 3).toUpperCase()
-    return `${simplifiedName} ${name[1].toUpperCase()}`
-}
-
-export const getGames = async function(id){
-    const url = `https://pokeapi.co/api/v2/version-group/${id}`
+export const getGeneration = async function(id){
+    const url = `https://pokeapi.co/api/v2/generation/${id}`
     const response = await fetch(url)
     var data = await response.json()
 
     return data = {
         name: data.name,
-        generation: simpleGenerationName(data.generation.name)
+        region: data.main_region.name.toUpperCase(),
+        pokemon_species: data.pokemon_species
     }
 }
 
-export const getGameQuantity = async function(){
-    const url = `https://pokeapi.co/api/v2/version-group/`
+export const getGenerationQuantity = async function(){
+    const url = `https://pokeapi.co/api/v2/generation`
     const response = await fetch(url)
     var data = await response.json()
 
     return data = {
         count: data.count
+    }
+}
+
+export const getPokemon = async function(pokemonName){
+    const url = `https://pokeapi.co/api/v2/pokemon/${pokemonName.toLowerCase()}`
+    const response = await fetch(url)
+    var data = await response.json()
+
+    return data = {
+        id: data.id,
+        name: data.name,
+        abilities: data.abilities,
+        types: data.types,
+        stats: data.stats,
+        height: data.height,
+        weight: data.weight,
+        sprites: data.sprites,
+        moves: data.moves
+    }
+}
+
+export const getPokemonSpecie = async function(pokemonName){
+    const url = `https://pokeapi.co/api/v2/pokemon-species/${pokemonName}/`
+    const response = await fetch(url)
+    var data = await response.json()
+
+    return data = {
+        id: data.id,
+        name: data.name,
+        specie: data.genera,
+        description: data.flavor_text_entries[0].flavor_text
     }
 }

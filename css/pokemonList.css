@@ -1,0 +1,88 @@
+:root{
+    --grass: #32BF00;
+    --fire: #FF5C00;
+    --water: #0047FF;
+    --bug: #CCD000;
+    --ground: #FFC700;
+    --dark: #665642;
+    --normal: #E5E1B6;
+    --fighting: #af3200;
+    --fairy: #ffb1f3;
+    --steel: #c6c6c6;
+    --dragon: #4632fa;
+    --poison: #8F00E7;
+    --rock: #9b8b7b;
+    --flying: #98cee1;
+    --ghost: #401473;
+    --ice: #9fe4ff;
+    --electric: #FFFF00;
+    --psychic: #d94ca5;
+}
+
+.list-container {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 24px 88px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    max-height: 100%;
+    width: 100%;
+    margin-top: 24px;
+}
+
+.pokemon-card {
+    width: 282px;
+    height: 248px;
+    background-color: #32BF0077;
+    color: var(--principal-color);
+    border: 2px solid var(--principal-color);
+    border-radius: 10px;
+    display: grid;
+    place-items: center;
+    transition: all .5s;
+    font-size: 1.2rem;
+    font-weight: 800;
+}
+
+.pokemon-icon{
+    display: grid;
+    place-items: center;
+    width: 178px;
+    height: 167px;
+    border-radius: 100%;
+    background: url('https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/generation-viii/icons/1.png'), rgba(0, 0, 0, 0.77);
+    background-repeat: no-repeat;
+    background-size: contain;
+}
+
+.pokemon-types{
+    display: flex;
+    gap: 5px;
+}
+
+.primary-type{
+    display: grid;
+    place-items: center;
+    width: 108.29px;
+    height: 23px;
+    background-color: var(--grass);
+    border: 1.5px solid #000;
+    border-radius: 15px;
+    color: #000;
+    font-size: 15px;
+    font-weight: 800;
+}
+
+.secondary-type{
+    display: grid;
+    place-items: center;
+    width: 108.29px;
+    height: 23px;
+    background-color: #8F00E7;
+    border: 1.5px solid #000;
+    border-radius: 15px;
+    color: #000;
+    font-size: 0.938rem;
+    font-weight: 800;
+}

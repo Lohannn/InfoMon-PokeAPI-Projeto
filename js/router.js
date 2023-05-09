@@ -1,10 +1,10 @@
 'use strict'
 
-import { loadCards } from "./gameList.js";
+import { loadCards } from "./generationList.js";
 
 const routes = {
     '/': '/pages/home.html',
-    '/pokemon': '/pages/pokemonList.html'
+    '/pokemon': '/pages/pokemon.html'
 }
 
 const route = async (e) => {
