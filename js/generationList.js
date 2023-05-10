@@ -7,7 +7,7 @@ const list = async function(){
     let limit = await getGenerationQuantity()
     let genList = []
 
-    for (let index = 1; index < limit.count; index++) {
+    for (let index = 1; index <= limit.count; index++) {
         let generation = await getGeneration(index)
         let gen = {}
 

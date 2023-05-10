@@ -112,14 +112,12 @@ const getPokemonIcon = async function (pokemonName) {
 
     // console.log(pokemon.sprites.versions["generation-vii"].icons.front_default);
 
-    if (pokemon.sprites.versions["generation-viii"].icons.front_default != null) {
-        icon = pokemon.sprites.versions["generation-viii"].icons.front_default
-    } else if (pokemon.sprites.versions["generation-vii"].icons.front_default != null) {
-        icon = pokemon.sprites.versions["generation-vii"].icons.front_default
-    } else if (pokemon.sprites.front_default != null) {
+    if (pokemon.sprites.front_default != null) {
         icon = pokemon.sprites.front_default
+    } else if(pokemon.sprites.other["official-artwork"].front_default != null){
+        icon = pokemon.sprites.other["official-artwork"].front_default
     } else {
-        icon = 'sem-imagem.jpg'
+        icon = '/img/sem-imagem.png'
     }
 
     return icon
@@ -187,6 +185,15 @@ class card extends HTMLElement {
                 font-weight: 800;
             }
 
+            .pokemon-card:hover {
+                background-color: var(--principal-color);
+                color: #000;
+            }
+
+            .pokemon-card:hover .pokemon-icon{
+                border: 5px solid #000;
+            }
+
             .pokemon-name{
                 text-align: center;
             }
@@ -202,7 +209,9 @@ class card extends HTMLElement {
                 background: url(${await getPokemonIcon(this.name)}), rgba(0, 0, 0, 0.77);
                 background-repeat: no-repeat;
                 background-size: contain;
+                background-position: center;
                 border: 2px solid var(--principal-color);
+                transition: all .5s;
             }
             
             .pokemon-types{

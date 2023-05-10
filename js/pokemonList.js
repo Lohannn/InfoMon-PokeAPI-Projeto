@@ -51,5 +51,3 @@ export const loadPokemon = async (gen) => {
 
     container.replaceChildren(...cards)
 }
-
-loadPokemon(localStorage.getItem('generation'))
