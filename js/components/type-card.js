@@ -21,16 +21,97 @@ const normal = getComputedStyle(document.documentElement).getPropertyValue('--no
 const electric = getComputedStyle(document.documentElement).getPropertyValue('--electric');
 const flying = getComputedStyle(document.documentElement).getPropertyValue('--flying');
 
+let getBackground = function (typeName) {
+    let bgColor;
+
+    switch (typeName.toLowerCase()) {
+        case 'electric':
+            bgColor = electric
+            break;
+
+        case 'grass':
+            bgColor = grass
+            break;
+
+        case 'fire':
+            bgColor = fire
+            break;
+
+        case 'water':
+            bgColor = water
+            break;
+
+        case 'bug':
+            bgColor = bug
+            break;
+
+        case 'poison':
+            bgColor = poison
+            break;
+
+        case 'normal':
+            bgColor = normal
+            break;
+
+        case 'fighting':
+            bgColor = fighting
+            break;
+
+        case 'psychic':
+            bgColor = psychic
+            break;
+
+        case 'flying':
+            bgColor = flying
+            break;
+
+        case 'fairy':
+            bgColor = fairy
+            break;
+
+        case 'steel':
+            bgColor = steel
+            break;
+
+        case 'ice':
+            bgColor = ice
+            break;
+
+        case 'rock':
+            bgColor = rock
+            break;
+
+        case 'ground':
+            bgColor = ground
+            break;
+
+        case 'dark':
+            bgColor = dark
+            break;
+
+        case 'ghost':
+            bgColor = ghost
+            break;
+
+        case 'dragon':
+            bgColor = dragon
+            break;
+
+
+    }
+
+    return bgColor;
+}
+
 class card extends HTMLElement {
     constructor() {
         super()
         this.shadow = this.attachShadow({ mode: 'open' })
-        this.name = ''
-        this.gen = ''
+        this.type = 'electric'
     }
 
     static get observedAttributes() {
-        return ['name', 'gen']
+        return ['type']
     }
 
     attributeChangedCallback(attribute, oldValue, newValue) {
@@ -55,39 +136,17 @@ class card extends HTMLElement {
                 text-decoration: none;
             }
 
-            .game-card {
-                width: 282px;
-                height: 248px;
-                background-color: var(--primary-color);
-                color: var(--principal-color);
-                border: 2px solid var(--principal-color);
-                border-radius: 10px;
+            .type-card{
                 display: grid;
                 place-items: center;
-                transition: all .5s;
-            }
-
-            .game-card:hover{
-                color: var(--secondary-color);
-                background-color: var(--principal-color);
-            }
-            
-            .infos {
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-                justify-content: center;
-                text-align: center;
-            }
-            
-            .game-name {
-                font-weight: 700;
-                font-size: 2rem;
-            }
-            
-            .game-gen {
+                width: 108.29px;
+                height: 23px;
+                background-color: ${getBackground(this.type)};
+                border: 1.5px solid #000;
+                border-radius: 15px;
+                color: #000;
+                font-size: 15px;
                 font-weight: 800;
-                font-size: 2rem;
             }
         `
 
@@ -95,27 +154,19 @@ class card extends HTMLElement {
     }
 
     component() {
-        const card = document.createElement('a')
-        card.classList.add('game-card')
-        card.addEventListener('click', route)
-        card.href = '/pokemon'
-        const infos = document.createElement('container')
-        infos.classList.add('infos')
-        infos.href = '/pokemon'
-        const gameName = document.createElement('h2')
-        gameName.classList.add('game-name')
-        gameName.textContent = this.name.replace(/&/g, '')
-        gameName.href = '/pokemon'
-        const gameGen = document.createElement('h2')
-        gameGen.classList.add('game-gen')
-        gameGen.textContent = this.gen
-        gameGen.href = '/pokemon'
+        let primeiraLetra = this.type.slice(0, 1).toUpperCase()
+        let resto = this.type.slice(1).toLowerCase()
 
-        card.append(infos)
-        infos.append(gameName, gameGen)
+        const card = document.createElement('div')
+        card.classList.add('type-card')
+        const typeName = document.createElement('div')
+        typeName.classList.add('typeName')
+        typeName.textContent = primeiraLetra + resto
+
+        card.append(typeName)
 
         return card
     }
 }
 
-customElements.define('game-card', card)
+customElements.define('type-card', card)

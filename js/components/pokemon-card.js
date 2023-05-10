@@ -2,7 +2,7 @@
 
 import '../router.js'
 
-import { getPokemon } from "../fetchs";
+import { getPokemon } from "../fetchs.js";
 
 const grass = getComputedStyle(document.documentElement).getPropertyValue('--grass');
 const fire = getComputedStyle(document.documentElement).getPropertyValue('--fire');
@@ -23,6 +23,121 @@ const normal = getComputedStyle(document.documentElement).getPropertyValue('--no
 const electric = getComputedStyle(document.documentElement).getPropertyValue('--electric');
 const flying = getComputedStyle(document.documentElement).getPropertyValue('--flying');
 
+const getBackground = async function (pokemonName) {
+    let pokemon = await getPokemon(pokemonName)
+    let bgColor;
+
+    switch (pokemon.types[0].type.name) {
+        case 'electric':
+            bgColor = electric
+            break;
+
+        case 'grass':
+            bgColor = grass
+            break;
+
+        case 'fire':
+            bgColor = fire
+            break;
+
+        case 'water':
+            bgColor = water
+            break;
+
+        case 'bug':
+            bgColor = bug
+            break;
+
+        case 'poison':
+            bgColor = poison
+            break;
+
+        case 'normal':
+            bgColor = normal
+            break;
+
+        case 'fighting':
+            bgColor = fighting
+            break;
+
+        case 'psychic':
+            bgColor = psychic
+            break;
+
+        case 'flying':
+            bgColor = flying
+            break;
+
+        case 'fairy':
+            bgColor = fairy
+            break;
+
+        case 'steel':
+            bgColor = steel
+            break;
+
+        case 'ice':
+            bgColor = ice
+            break;
+
+        case 'rock':
+            bgColor = rock
+            break;
+
+        case 'ground':
+            bgColor = ground
+            break;
+
+        case 'dark':
+            bgColor = dark
+            break;
+
+        case 'ghost':
+            bgColor = ghost
+            break;
+
+        case 'dragon':
+            bgColor = dragon
+            break;
+
+
+    }
+
+    return bgColor;
+}
+
+const getPokemonIcon = async function (pokemonName) {
+    let pokemon = await getPokemon(pokemonName)
+    let icon;
+
+    // console.log(pokemon.sprites.versions["generation-vii"].icons.front_default);
+
+    if (pokemon.sprites.versions["generation-viii"].icons.front_default != null) {
+        icon = pokemon.sprites.versions["generation-viii"].icons.front_default
+    } else if (pokemon.sprites.versions["generation-vii"].icons.front_default != null) {
+        icon = pokemon.sprites.versions["generation-vii"].icons.front_default
+    } else if (pokemon.sprites.front_default != null) {
+        icon = pokemon.sprites.front_default
+    } else {
+        icon = 'sem-imagem.jpg'
+    }
+
+    return icon
+}
+
+const getPokemonId = async function (pokemonName) {
+    let pokemon = await getPokemon(pokemonName)
+    let id = pokemon.id.toString();
+
+    if (id.length < 2) {
+        id = `00${pokemon.id}`
+    } else if (id.length < 3) {
+        id = `0${pokemon.id}`
+    }
+
+    return id
+}
+
 class card extends HTMLElement {
     constructor() {
         super()
@@ -38,12 +153,12 @@ class card extends HTMLElement {
         this[attribute] = newValue
     }
 
-    connectedCallback() {
-        this.shadow.appendChild(this.component())
-        this.shadow.appendChild(this.styles())
+    async connectedCallback() {
+        this.shadow.appendChild(await this.component())
+        this.shadow.appendChild(await this.styles())
     }
 
-    styles() {
+    async styles() {
         const css = document.createElement('style')
         css.textContent = `
             *{
@@ -58,8 +173,10 @@ class card extends HTMLElement {
 
             .pokemon-card {
                 width: 282px;
-                height: 248px;
-                background-color: ${};
+                height: 280px;
+                max-width: 282px;
+                max-height: 280px;
+                background-color: ${await getBackground(this.name)}77;
                 color: var(--principal-color);
                 border: 2px solid var(--principal-color);
                 border-radius: 10px;
@@ -69,14 +186,20 @@ class card extends HTMLElement {
                 font-size: 1.2rem;
                 font-weight: 800;
             }
+
+            .pokemon-name{
+                text-align: center;
+            }
             
             .pokemon-icon{
                 display: grid;
                 place-items: center;
                 width: 178px;
+                max-width: 178px;
                 height: 167px;
+                max-height: 167px;
                 border-radius: 100%;
-                background: url(${}), rgba(0, 0, 0, 0.77);
+                background: url(${await getPokemonIcon(this.name)}), rgba(0, 0, 0, 0.77);
                 background-repeat: no-repeat;
                 background-size: contain;
                 border: 2px solid var(--principal-color);
@@ -91,28 +214,39 @@ class card extends HTMLElement {
         return css
     }
 
-    component() {
+    async component() {
+        let pokemon = await getPokemon(this.name)
+
+        let primeiraLetra = this.name.slice(0, 1).toUpperCase()
+        let resto = this.name.slice(1).toLowerCase()
+        let pokeName = primeiraLetra + resto
+
         const card = document.createElement('a')
-        card.classList.add('game-card')
+        card.classList.add('pokemon-card')
         card.addEventListener('click', route)
         card.href = '/pokemon'
-        const infos = document.createElement('container')
-        infos.classList.add('infos')
-        infos.href = '/pokemon'
-        const gameName = document.createElement('h2')
-        gameName.classList.add('game-name')
-        gameName.textContent = this.name.replace(/&/g, '')
-        gameName.href = '/pokemon'
-        const gameGen = document.createElement('h2')
-        gameGen.classList.add('game-gen')
-        gameGen.textContent = this.gen
-        gameGen.href = '/pokemon'
+        const pokemonName = document.createElement('h2')
+        pokemonName.classList.add('pokemon-name')
+        pokemonName.textContent = `#${await getPokemonId(this.name)} - ${pokeName.replace(/-/g, ' ')}`
+        pokemonName.href = '/pokemon'
+        const pokemonIcon = document.createElement('div')
+        pokemonIcon.classList.add('pokemon-icon')
+        pokemonIcon.href = '/pokemon'
+        const pokemonTypes = document.createElement('div')
+        pokemonTypes.classList.add('pokemon-types')
+        pokemonTypes.href = '/pokemon'
 
-        card.append(infos)
-        infos.append(gameName, gameGen)
+        card.append(pokemonName, pokemonIcon, pokemonTypes)
+
+        pokemon.types.forEach(type => {
+            const typeCard = document.createElement('type-card')
+            typeCard.type = type.type.name
+
+            pokemonTypes.appendChild(typeCard)
+        });
 
         return card
     }
 }
 
-customElements.define('game-card', card)
+customElements.define('pokemon-card', card)

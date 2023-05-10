@@ -88,18 +88,18 @@ class card extends HTMLElement {
             localStorage.setItem('generation', this.name)
             route(e)
         })
-        card.href = '/pokemon'
+        card.href = '/pokemon-list'
         const infos = document.createElement('container')
         infos.classList.add('infos')
-        infos.href = '/pokemon'
+        infos.href = '/pokemon-list'
         const generationName = document.createElement('h2')
         generationName.classList.add('generation-name')
         generationName.textContent = simpleGenerationName(this.name)
-        generationName.href = '/pokemon'
+        generationName.href = '/pokemon-list'
         const generationRegion = document.createElement('h2')
         generationRegion.classList.add('generation-region')
         generationRegion.textContent = this.region
-        generationRegion.href = '/pokemon'
+        generationRegion.href = '/pokemon-list'
 
         card.append(infos)
         infos.append(generationName, generationRegion)
