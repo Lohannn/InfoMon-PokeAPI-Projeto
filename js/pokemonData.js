@@ -22,7 +22,7 @@ const normal = getComputedStyle(document.documentElement).getPropertyValue('--no
 const electric = getComputedStyle(document.documentElement).getPropertyValue('--electric');
 const flying = getComputedStyle(document.documentElement).getPropertyValue('--flying');
 
-let getTypeColor = function (pokemon) {
+const getTypeColor = function (pokemon) {
     let type = pokemon.types[0].type.name
     let bgColor;
 
@@ -120,7 +120,43 @@ const getPokemonId = async function (pokemonName) {
 
 export const buildPage = async () => {
     let selectedPokemon = await getPokemon(localStorage.getItem('pokemon'));
-    let selectedPokemonSpecie = await getPokemonSpecie(localStorage.getItem('pokemon'));
+
+    let catchPokemonSpecie = async function (pokemonName) {
+        let pokemon;
+
+        if (await getPokemonSpecie(pokemonName) !== 404) {
+            pokemon = await getPokemonSpecie(pokemonName)
+        } else {
+            pokemon = await getPokemonSpecie(selectedPokemon.id)
+        }
+        return pokemon
+    }
+
+    let selectedPokemonSpecie = await catchPokemonSpecie(localStorage.getItem('pokemon'))
+
+    let getPokemonStats = function (pokemon){
+        let statsJSON = {};
+
+        pokemon.stats.forEach(stat => {
+            if(stat.stat.name == 'hp'){
+                statsJSON.hp = stat.base_stat
+            } else if(stat.stat.name == 'attack'){
+                statsJSON.attack = stat.base_stat
+            } else if(stat.stat.name == 'special-attack'){
+                statsJSON.sp_attack = stat.base_stat
+            } else if(stat.stat.name == 'defense'){
+                statsJSON.defense = stat.base_stat
+            } else if(stat.stat.name == 'special-defense'){
+                statsJSON.sp_defense = stat.base_stat
+            } else if(stat.stat.name == 'speed'){
+                statsJSON.speed = stat.base_stat
+            }
+        });
+
+        statsJSON.max_status = (statsJSON.hp + statsJSON.attack + statsJSON.sp_attack + statsJSON.defense + statsJSON.sp_defense + statsJSON.speed)
+
+        return statsJSON
+    }
 
     let primeiraLetra = selectedPokemon.name.slice(0, 1).toUpperCase()
     let resto = selectedPokemon.name.slice(1).toLowerCase()
@@ -151,4 +187,63 @@ export const buildPage = async () => {
 
         types.appendChild(typeCard)
     });
+
+    let pokemonDescriptionInfo = document.getElementById('pokemonDescription')
+    pokemonDescriptionInfo.style.color = getTypeColor(selectedPokemon)
+
+    let pokemonDescription = document.getElementById('description')
+    pokemonDescription.textContent = selectedPokemonSpecie.description
+
+    let weight = document.getElementById('weightValue')
+    weight.textContent = `${parseFloat((selectedPokemon.weight)) / 10} KG`
+
+    let height = document.getElementById('heightValue')
+    height.textContent = `${parseFloat((selectedPokemon.height)) / 10} M`
+
+    let pokemonCombatInfo = document.getElementById('pokemonCombatInfo')
+    pokemonCombatInfo.style.color = getTypeColor(selectedPokemon)
+
+    let statQuantity = document.getElementsByClassName('statQuantity')
+    for (let index = 0, limit = statQuantity.length; index < limit; index++) {
+        statQuantity[index].style.backgroundColor = getTypeColor(selectedPokemon);
+    }
+
+    let hp = document.getElementById('hp')
+    let hpValue = document.getElementById('statNumber_hp')
+    hp.style.width = `calc((100% * ${getPokemonStats(selectedPokemon).hp}/255) - 17%)`
+    hpValue.textContent = getPokemonStats(selectedPokemon).hp
+
+    let atk = document.getElementById('atk')
+    let atkValue = document.getElementById('statNumber_atk')
+    atk.style.width = `calc((100% * ${getPokemonStats(selectedPokemon).attack}/255) - 17%)`
+    atkValue.textContent = getPokemonStats(selectedPokemon).attack
+
+    let spa = document.getElementById('spa')
+    let spaValue = document.getElementById('statNumber_spa')
+    spa.style.width = `calc((100% * ${getPokemonStats(selectedPokemon).sp_attack}/255) - 17%)`
+    spaValue.textContent = getPokemonStats(selectedPokemon).sp_attack
+
+    let def = document.getElementById('def')
+    let defValue = document.getElementById('statNumber_def')
+    def.style.width = `calc((100% * ${getPokemonStats(selectedPokemon).defense}/255) - 17%)`
+    defValue.textContent = getPokemonStats(selectedPokemon).defense
+
+    let spd = document.getElementById('spd')
+    let spdValue = document.getElementById('statNumber_spd')
+    spd.style.width = `calc((100% * ${getPokemonStats(selectedPokemon).sp_defense}/255) - 17%)`
+    spdValue.textContent = getPokemonStats(selectedPokemon).sp_defense
+
+    let spe = document.getElementById('spe')
+    let speValue = document.getElementById('statNumber_spe')
+    spe.style.width = `calc((100% * ${getPokemonStats(selectedPokemon).speed}/255) - 17%)`
+    speValue.textContent = getPokemonStats(selectedPokemon).speed
+
+    let max = document.getElementById('max')
+    let maxValue = document.getElementById('statNumber_max')
+    max.style.width = `calc((100% * ${getPokemonStats(selectedPokemon).max_status}/1530) - 17%)`
+    maxValue.textContent = getPokemonStats(selectedPokemon).max_status
+
+    let moveButton = document.getElementById('moveButton')
+    moveButton.style.backgroundColor = getTypeColor(selectedPokemon);
+    moveButton.style.backgroundColor = getTypeColor(selectedPokemon);
 }

@@ -110,8 +110,6 @@ const getPokemonIcon = async function (pokemonName) {
     let pokemon = await getPokemon(pokemonName)
     let icon;
 
-    // console.log(pokemon.sprites.versions["generation-vii"].icons.front_default);
-
     if (pokemon.sprites.front_default != null) {
         icon = pokemon.sprites.front_default
     } else if(pokemon.sprites.other["official-artwork"].front_default != null){

@@ -49,30 +49,41 @@ export const getPokemon = async function (nameOrId) {
 export const getPokemonSpecie = async function (pokemonName) {
     const url = `https://pokeapi.co/api/v2/pokemon-species/${pokemonName}/`
     const response = await fetch(url)
-    var data = await response.json()
 
-    let desc = () => {
-        if(data.flavor_text_entries[0] !== undefined) {
-            return data.flavor_text_entries[0].flavor_text
-        } else {
-            return 'unknown'
-        }
-    }
+    if (response.status !== 200) {
+        return response.status
+    } else {
+        var data = await response.json()
 
-    let specie = () => {
-        let desc;
-        data.genera.forEach(specie => {
-            if(specie.language.name == 'en') {
-                desc = specie.genus
+        let desc = () => {
+            let desc;
+            if (data.flavor_text_entries[0] !== undefined) {
+                data.flavor_text_entries.forEach(description => {
+                    if (description.language.name == 'en') {
+                        desc = description.flavor_text
+                    }
+                })
+            } else {
+                return 'unknown'
             }
-        })
-        return desc
-    }
+            return desc
+        }
 
-    return data = {
-        id: data.id,
-        name: data.name,
-        specie: specie(),
-        description: desc()
+        let specie = () => {
+            let desc;
+            data.genera.forEach(specie => {
+                if (specie.language.name == 'en') {
+                    desc = specie.genus
+                }
+            })
+            return desc
+        }
+
+        return data = {
+            id: data.id,
+            name: data.name,
+            specie: specie(),
+            description: desc()
+        }
     }
 }

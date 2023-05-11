@@ -44,6 +44,7 @@ function getContainer() {
   }
 
 export const loadPokemon = async (gen) => {
+  console.log('Funcionou');
     let pokeList = await list(gen)
 
     const container = await getContainer()
