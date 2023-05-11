@@ -51,10 +51,28 @@ export const getPokemonSpecie = async function (pokemonName) {
     const response = await fetch(url)
     var data = await response.json()
 
+    let desc = () => {
+        if(data.flavor_text_entries[0] !== undefined) {
+            return data.flavor_text_entries[0].flavor_text
+        } else {
+            return 'unknown'
+        }
+    }
+
+    let specie = () => {
+        let desc;
+        data.genera.forEach(specie => {
+            if(specie.language.name == 'en') {
+                desc = specie.genus
+            }
+        })
+        return desc
+    }
+
     return data = {
         id: data.id,
         name: data.name,
-        specie: data.genera,
-        description: data.flavor_text_entries[0].flavor_text
+        specie: specie(),
+        description: desc()
     }
 }

@@ -2,6 +2,7 @@
     --primary-color: #2C2C2C;
     --secondary-color: #000;
     --principal-color: #F2DA03;
+    --terciary-color: #FFF;
 }
 
 body {
@@ -9,6 +10,28 @@ body {
     background-color: var(--secondary-color);
     display: grid;
     grid-template-rows: 100px 1fr;
+    font-family: 'Inter', sans-serif;
+}
+
+/* width */
+body::-webkit-scrollbar {
+    width: 5px;
+    padding-left: 5px;
+}
+
+/* Track */
+body::-webkit-scrollbar-track {
+    background: var(--secondary-color);
+}
+
+/* Handle */
+body::-webkit-scrollbar-thumb {
+    background: var(--primary-color);
+}
+
+/* Handle on hover */
+body::-webkit-scrollbar-thumb:hover {
+    background: var(--principal-color);
 }
 
 header {

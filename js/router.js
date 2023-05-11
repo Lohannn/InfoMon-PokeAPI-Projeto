@@ -2,10 +2,13 @@
 
 import { loadCards } from "./generationList.js";
 import { loadPokemon } from "./pokemonList.js";
+import { buildPage } from "./pokemonData.js";
 
 const routes = {
     '/': '/pages/home.html',
-    '/pokemon-list': '/pages/pokemon.html'
+    '/pokemon-list': '/pages/pokemon.html',
+    '/pokemon': '/pages/selectedPokemon.html',
+    '/moves': '/pages/moves.html'
 }
 
 const route = async (e) => {
@@ -24,6 +27,8 @@ const route = async (e) => {
         loadCards()
     } else if (window.location.pathname == '/pokemon-list') {
         loadPokemon(localStorage.getItem('generation'))
+    } else if (window.location.pathname == '/pokemon') {
+        buildPage(localStorage.getItem('pokemon'))
     }
 }
 

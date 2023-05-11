@@ -174,7 +174,7 @@ class card extends HTMLElement {
                 height: 280px;
                 max-width: 282px;
                 max-height: 280px;
-                background-color: ${await getBackground(this.name)}77;
+                background-color: ${await getBackground(this.name)}c4;
                 color: var(--principal-color);
                 border: 2px solid var(--principal-color);
                 border-radius: 10px;
@@ -232,7 +232,10 @@ class card extends HTMLElement {
 
         const card = document.createElement('a')
         card.classList.add('pokemon-card')
-        card.addEventListener('click', route)
+        card.addEventListener('click', (e) => {
+            localStorage.setItem('pokemon', this.name)
+            route(e)
+        })
         card.href = '/pokemon'
         const pokemonName = document.createElement('h2')
         pokemonName.classList.add('pokemon-name')
