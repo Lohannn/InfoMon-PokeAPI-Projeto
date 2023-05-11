@@ -11,6 +11,7 @@
 
 .shiny:hover{
     color: var(--terciary-color);
+    text-shadow: #ffffff 0px 0px 5px;
 }
 
 .info-container{
@@ -71,7 +72,7 @@
     gap: 150px;
     color: var(--electric);
     margin-bottom: 24px;
-    -webkit-text-stroke: 1px #000;
+    text-shadow: #000 0px 0px 5px;
 }
 
 .description{
@@ -114,13 +115,13 @@
     gap: 170px;
     color: var(--electric);
     margin-bottom: 24px;
-    -webkit-text-stroke: 1px #000;
 }
 
 .pokemonCombatInfo h2{
     margin-bottom: 24px;
     font-size: 2.813rem;
     font-weight: 700;
+    text-shadow: #000 0px 0px 5px;
 }
 
 .stats{
@@ -160,6 +161,7 @@
     height: 100%;
     width: calc((100% * 255/255) - 17%);
     border-radius: 0px 15px 15px 0px;
+    min-width: 20px;
 }
 
 .statNumber{

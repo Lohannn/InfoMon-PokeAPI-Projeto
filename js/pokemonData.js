@@ -134,21 +134,21 @@ export const buildPage = async () => {
 
     let selectedPokemonSpecie = await catchPokemonSpecie(localStorage.getItem('pokemon'))
 
-    let getPokemonStats = function (pokemon){
+    let getPokemonStats = function (pokemon) {
         let statsJSON = {};
 
         pokemon.stats.forEach(stat => {
-            if(stat.stat.name == 'hp'){
+            if (stat.stat.name == 'hp') {
                 statsJSON.hp = stat.base_stat
-            } else if(stat.stat.name == 'attack'){
+            } else if (stat.stat.name == 'attack') {
                 statsJSON.attack = stat.base_stat
-            } else if(stat.stat.name == 'special-attack'){
+            } else if (stat.stat.name == 'special-attack') {
                 statsJSON.sp_attack = stat.base_stat
-            } else if(stat.stat.name == 'defense'){
+            } else if (stat.stat.name == 'defense') {
                 statsJSON.defense = stat.base_stat
-            } else if(stat.stat.name == 'special-defense'){
+            } else if (stat.stat.name == 'special-defense') {
                 statsJSON.sp_defense = stat.base_stat
-            } else if(stat.stat.name == 'speed'){
+            } else if (stat.stat.name == 'speed') {
                 statsJSON.speed = stat.base_stat
             }
         });
@@ -165,10 +165,30 @@ export const buildPage = async () => {
     let info_container = document.getElementById('info-container')
     info_container.style.backgroundColor = getTypeColor(selectedPokemon) + 'c4'
 
+    let photo = selectedPokemon.sprites.other["official-artwork"].front_default
+    let shinyPhoto = selectedPokemon.sprites.other["official-artwork"].front_shiny
+
     let pokemonPhoto = document.getElementById('pokemonPhoto')
-    pokemonPhoto.style.background = `url(${selectedPokemon.sprites.other["official-artwork"].front_default}) no-repeat`
+    pokemonPhoto.style.background = `url(${photo}) no-repeat`
     pokemonPhoto.style.backgroundPosition = 'center'
     pokemonPhoto.style.backgroundSize = 'contain'
+
+    let shiny = document.getElementById('shiny')
+    shiny.addEventListener('click', function () {
+        if (photo == selectedPokemon.sprites.other["official-artwork"].front_default) {
+            if (selectedPokemon.sprites.other["official-artwork"].front_shiny != null) {
+                photo = selectedPokemon.sprites.other["official-artwork"].front_shiny
+                pokemonPhoto.style.background = `url(${shinyPhoto}) no-repeat center`
+                pokemonPhoto.style.backgroundPosition = 'center'
+                pokemonPhoto.style.backgroundSize = 'contain'
+            }
+        } else if (photo == selectedPokemon.sprites.other["official-artwork"].front_shiny) {
+            photo = selectedPokemon.sprites.other["official-artwork"].front_default
+            pokemonPhoto.style.background = `url(${photo}) no-repeat`
+            pokemonPhoto.style.backgroundPosition = 'center'
+            pokemonPhoto.style.backgroundSize = 'contain'
+        }
+    })
 
     let pokemonNumber = document.getElementById('number')
     pokemonNumber.textContent = `#${await getPokemonId(selectedPokemon)}`
@@ -246,4 +266,20 @@ export const buildPage = async () => {
     let moveButton = document.getElementById('moveButton')
     moveButton.style.backgroundColor = getTypeColor(selectedPokemon);
     moveButton.style.backgroundColor = getTypeColor(selectedPokemon);
+
+    let ability_container = document.getElementById('abilityList')
+
+    selectedPokemon.abilities.forEach(ability => {
+        let abilityCard = document.createElement('ability-card')
+        abilityCard.color = getTypeColor(selectedPokemon)
+        abilityCard.name = ability.ability.name
+
+        if (ability.is_hidden === false) {
+            abilityCard.isHidden = false
+        } else {
+            abilityCard.isHidden = true
+        }
+
+        ability_container.appendChild(abilityCard)
+    });
 }

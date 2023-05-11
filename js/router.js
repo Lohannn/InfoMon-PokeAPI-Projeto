@@ -28,7 +28,7 @@ const route = async (e) => {
     } else if (window.location.pathname == '/pokemon-list') {
         loadPokemon(localStorage.getItem('generation'))
     } else if (window.location.pathname == '/pokemon') {
-        buildPage(localStorage.getItem('pokemon'))
+        buildPage()
     }
 }
 
