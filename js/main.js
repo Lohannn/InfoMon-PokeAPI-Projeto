@@ -1,6 +1,6 @@
 'use strict'
 
-import { loadCards } from "./generationList.js";
+import { iniatilizePage } from "./generationList.js";
 
 const routes = {
     '/': '/pages/home.html'
@@ -14,7 +14,7 @@ const defaultPage = async () => {
 
     document.getElementById('root').innerHTML = html
 
-    loadCards()
+    iniatilizePage()
 }
 
 defaultPage()

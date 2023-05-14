@@ -20,6 +20,9 @@ const list = async function(){
     return genList
 }
 
+const generationInput = document.getElementById('buscador')
+generationInput.addEve
+
 const createGenerationCards =  (generation) => {
     const card = document.createElement('generation-card')
     card.name = generation.name
@@ -42,13 +45,13 @@ function getContainer() {
     });
   }
 
-export const loadCards = async () => {
-    let genList = await list()
-
+const loadCards = async (genList) => {
     const container = await getContainer()
     const cards = genList.map(createGenerationCards)
 
     container.replaceChildren(...cards)
 }
 
-loadCards()
+export const iniatilizePage = async () => {
+   loadCards(await list())
+}
