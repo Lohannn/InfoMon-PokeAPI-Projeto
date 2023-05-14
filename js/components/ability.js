@@ -102,20 +102,61 @@ class card extends HTMLElement {
                 position: absolute;
                 right: calc(100% - 7%);
             }
+
+            @media (max-width: 800px) {
+                .normalAbility{
+                    height: 35px;
+                    color: #000;
+                    background-color: ${this.color};
+                    border-radius: 15px;
+                    border: 2px solid #000;
+                    font-size: 1rem;
+                    font-weight: 600;
+                    padding-left: 100px;
+                    padding-right: 100px;
+                    display: grid;
+                    place-items: center;
+                }
+                
+                .hiddenAbility{
+                    height: 35px;
+                    color: #000;
+                    background-color: ${this.color}80;
+                    border-radius: 15px;
+                    border: 2px solid #000;
+                    font-size: 1rem;
+                    font-weight: 600;
+                    display: grid;
+                    place-items: center;
+                    position: relative;
+                    overflow: hidden;
+                    padding-left: 100px;
+                    padding-right: 100px;
+                    display: grid;
+                    place-items: center;
+                }
+                
+                .hidden{
+                    height: 100%;
+                    width: 40px;
+                    color: #000;
+                    font-size: .9rem;
+                    font-weight: 800;
+                    background-color: ${this.color};
+                    display: grid;
+                    padding-right: 5px;
+                    align-items: center;
+                    justify-items: end;
+                    position: absolute;
+                    right: calc(100% - 7%);
+                }
+            }
         `
 
         return css
     }
 
     component() {
-        // <div class="normalAbility">
-        //             <p>Static</p>
-        //         </div>
-        //         <div class="hiddenAbility">
-        //             <div class="hidden">H</div>
-        //             <p>Lightning Rod</p>
-        //         </div>
-
         let getCase = function (name) {
             let word = name;
             let splitWord = word.split(' ');

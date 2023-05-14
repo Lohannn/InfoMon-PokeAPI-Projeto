@@ -24,11 +24,11 @@ export const getGenerationQuantity = async function () {
 
 export const getPokemon = async function (nameOrId) {
     const url = `https://pokeapi.co/api/v2/pokemon/${nameOrId.toLowerCase()}`
-    const response = await fetch(url)
+    var response;
 
-    if (response.status !== 200) {
-        return response.status
-    } else {
+    try {
+        response = await fetch(url)
+
         var data = await response.json()
 
         return data = {
@@ -42,12 +42,13 @@ export const getPokemon = async function (nameOrId) {
             sprites: data.sprites,
             moves: data.moves
         }
+    } catch (error) {
+        return response.status
     }
-
 }
 
-export const getPokemonSpecie = async function (pokemonName) {
-    const url = `https://pokeapi.co/api/v2/pokemon-species/${pokemonName}/`
+export const getPokemonSpecie = async function (nameOrId) {
+    const url = `https://pokeapi.co/api/v2/pokemon-species/${nameOrId}/`
     const response = await fetch(url)
 
     if (response.status !== 200) {

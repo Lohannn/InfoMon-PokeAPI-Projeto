@@ -76,6 +76,12 @@ class card extends HTMLElement {
                 font-weight: 800;
                 font-size: 2rem;
             }
+
+            @media (max-width: 800px) {
+                .generation-card{
+                    width: 92vw;
+                }
+            }
         `
 
         return css

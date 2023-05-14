@@ -1,4 +1,4 @@
-.shiny{
+.shiny {
     width: 100%;
     color: var(--principal-color);
     text-align: start;
@@ -6,60 +6,58 @@
     font-size: 2.188rem;
     cursor: pointer;
     transition: all .5s;
-    margin-bottom: 24px;
+    margin-bottom: var(--defaul-padding);
 }
 
-.shiny:hover{
+.shiny:hover {
     color: var(--terciary-color);
     text-shadow: #ffffff 0px 0px 5px;
 }
 
-.info-container{
+.info-container {
     width: calc(100% + 48px);
     min-height: 373px;
     max-height: 373px;
-    background-color: #c4c4c4;
+    background: #c4c4c4 url('/img/loading-pokemon.png') no-repeat center;
     display: flex;
     justify-content: center;
     align-items: center;
     gap: 60px;
     color: #000;
-    margin-bottom: 24px;
+    margin-bottom: var(--defaul-padding);
 }
 
-.pokemonPhoto{
+.pokemonPhoto {
     height: 100%;
-    width: 425px;
-    display: grid;
-    place-items: center;
+    width: 20vw;
 }
 
-.pokemonIdAndName{
+.pokemonIdAndName {
     height: 257.52px;
     display: flex;
     flex-direction: column;
     justify-content: center;
 }
 
-.number{
+.number {
     font-size: 3.125rem;
     font-weight: 800;
 }
 
-.name{
+.name {
     font-size: 4.063rem;
     font-weight: 800;
 }
 
-.specie{
+.specie {
     font-size: 3.125rem;
     font-weight: 800;
     font-family: 'Maven Pro', sans-serif;
 }
 
-.pokemonDescription{
+.pokemonDescription {
     width: 100%;
-    padding: 24px;
+    padding: var(--defaul-padding);
     background-color: var(--primary-color);
     border: 2px solid var(--principal-color);
     border-radius: 15px;
@@ -68,11 +66,11 @@
     justify-content: center;
     gap: 150px;
     color: #c4c4c4;
-    margin-bottom: 24px;
+    margin-bottom: var(--defaul-padding);
     text-shadow: #000 0px 0px 5px;
 }
 
-.description{
+.description {
     width: 677px;
     max-width: 677px;
     font-weight: 400;
@@ -80,7 +78,7 @@
     text-align: center;
 }
 
-.pokemonCharacteristics{
+.pokemonCharacteristics {
     display: flex;
     flex-direction: column;
     gap: 30px;
@@ -90,19 +88,19 @@
     align-items: end;
 }
 
-.weight{
+.weight {
     display: flex;
 }
 
-.height{
+.height {
     display: flex;
 }
 
-.pokemonCombatInfo{
+.pokemonCombatInfo {
     width: 100%;
     min-height: 627px;
     max-height: 627px;
-    padding: 24px;
+    padding: var(--defaul-padding);
     background-color: var(--primary-color);
     border: 2px solid var(--principal-color);
     border-radius: 15px;
@@ -111,24 +109,24 @@
     justify-content: center;
     gap: 170px;
     color: #c4c4c4;
-    margin-bottom: 24px;
+    margin-bottom: var(--defaul-padding);
 }
 
-.pokemonCombatInfo h2{
-    margin-bottom: 24px;
+.pokemonCombatInfo h2 {
+    margin-bottom: var(--defaul-padding);
     font-size: 2.813rem;
     font-weight: 700;
     text-shadow: #000 0px 0px 5px;
 }
 
-.stats{
+.stats {
     gap: 10px;
     display: flex;
     flex-direction: column;
     align-items: center;
 }
 
-.statBar{
+.statBar {
     position: relative;
     height: 45px;
     width: 680px;
@@ -141,7 +139,7 @@
     justify-content: flex-start;
 }
 
-.statName{
+.statName {
     height: 100%;
     width: 65px;
     color: #000;
@@ -152,7 +150,7 @@
     place-items: center;
 }
 
-.statQuantity{
+.statQuantity {
     background-color: #c4c4c4;
     height: 100%;
     width: calc((100% * 255/255) - 17%);
@@ -160,7 +158,7 @@
     min-width: 20px;
 }
 
-.statNumber{
+.statNumber {
     width: 38px;
     text-align: end;
     color: var(--terciary-color);
@@ -172,7 +170,7 @@
     -webkit-text-stroke: 0;
 }
 
-.statDivisor{
+.statDivisor {
     width: calc(100% - 20px);
     height: 0px;
     border: .5px solid var(--principal-color);
@@ -180,35 +178,193 @@
     margin-bottom: 25px;
 }
 
-.abilities{
+.abilities {
     gap: 10px;
     display: flex;
     flex-direction: column;
     align-items: center;
 }
 
-.moveButton{
-    height: 60px;
-    width: 485px;
-    color: #000;
-    background-color: #c4c4c4;
-    border-radius: 15px;
-    border: 2px solid #000;
-    font-size: 3.125rem;
-    font-weight: 700;
-    display: grid;
-    place-items: center;
-    margin-bottom: 24px;
-    transition: all .5s;
-}
-
-.moveButton:hover{
-    color: #fff;
-    background-color: #000;
-    border: 2px solid var(--principal-color);
-}
-
-.types{
+.types {
     display: flex;
     gap: 5px;
+}
+
+@media (max-width: 800px) {
+    :root {
+        --defaul-padding: 12px;
+    }
+
+    .info-container {
+        width: calc(100% + 24px);
+        min-height: 30vh;
+        gap: 5px;
+    }
+
+    .pokemonPhoto {
+        height: 100%;
+        width: 90vw;
+    }
+
+    .pokemonInfo{
+        transform: translateX(-10px);
+    }
+
+    .pokemonIdAndName {
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+
+    .number {
+        font-size: 1.5rem;
+        font-weight: 800;
+    }
+
+    .name {
+        font-size: 2rem;
+        font-weight: 800;
+    }
+
+    .specie {
+        font-size: 1.5rem;
+        font-weight: 800;
+        font-family: 'Maven Pro', sans-serif;
+    }
+
+    .pokemonDescription {
+        width: 100%;
+        padding: var(--defaul-padding);
+        background-color: var(--primary-color);
+        border: 1px solid var(--principal-color);
+        border-radius: 5px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        color: #c4c4c4;
+        margin-bottom: var(--defaul-padding);
+        text-shadow: #000 0px 0px 5px;
+    }
+    
+    .description {
+        width: 57vw;
+        max-width: 57vw;
+        font-weight: 400;
+        font-size: 1rem;
+        text-align: center;
+    }
+    
+    .pokemonCharacteristics {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        font-size: 1rem;
+        font-family: 'Maven Pro', sans-serif;
+        font-weight: 400;
+        align-items: end;
+    }
+    
+    .weight {
+        display: flex;
+    }
+    
+    .height {
+        display: flex;
+    }
+    
+    .pokemonCombatInfo {
+        width: 100%;
+        min-height: 627px;
+        padding: var(--defaul-padding);
+        background-color: var(--primary-color);
+        border: 1px solid var(--principal-color);
+        border-radius: 5px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 30px;
+        color: #c4c4c4;
+        margin-bottom: var(--defaul-padding);
+    }
+    
+    .pokemonCombatInfo h2 {
+        margin-bottom: var(--defaul-padding);
+        font-size: 2rem;
+        font-weight: 700;
+        text-shadow: #000 0px 0px 5px;
+    }
+    
+    .stats {
+        gap: 5px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .statBar {
+        position: relative;
+        height: 4vh;
+        width: 80vw;
+        border: 1px solid var(--secondary-color);
+        border-radius: 5px;
+        background-color: var(--secondary-color);
+        display: flex;
+        align-items: center;
+        overflow: hidden;
+        justify-content: flex-start;
+    }
+    
+    .statName {
+        height: 100%;
+        width: 65px;
+        color: #000;
+        font-size: .9rem;
+        font-weight: 800;
+        background-color: var(--principal-color);
+        display: grid;
+        place-items: center;
+    }
+    
+    .statQuantity {
+        background-color: #c4c4c4;
+        height: 100%;
+        width: calc((100% * 255/255) - 17%);
+        border-radius: 0px 15px 15px 0px;
+        min-width: 20px;
+    }
+    
+    .statNumber {
+        width: 38px;
+        text-align: end;
+        color: var(--terciary-color);
+        font-weight: 600;
+        font-size: .9rem;
+        margin-left: 3px;
+        position: absolute;
+        left: calc(100% - 15%);
+        -webkit-text-stroke: 0;
+    }
+    
+    .statDivisor {
+        width: calc(100% - 20px);
+        height: 0px;
+        border: .5px solid var(--principal-color);
+        margin-top: 25px;
+        margin-bottom: 25px;
+    }
+    
+    .abilities {
+        gap: 10px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .types {
+        display: flex;
+        gap: 2px;
+    }
 }

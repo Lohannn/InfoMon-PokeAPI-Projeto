@@ -23,7 +23,7 @@
 
 .fa-search {
     font-size: 2.188rem;
-    padding-right: 5px;
+    margin-right: 5px;
 }
 
 .buscador-container {
@@ -37,7 +37,6 @@
     border: 0px;
     height: 95%;
     width: 100%;
-    color: var(--secondary-color);
     background-color: var(--primary-color);
     color: var(--principal-color);
     font-weight: 600;
@@ -61,30 +60,6 @@ textarea:focus,
 input:focus {
     box-shadow: 0 0 0 0;
     outline: 0;
-}
-
-.gen-selector {
-    height: 45px;
-    display: flex;
-    align-items: center;
-}
-
-.divisor {
-    height: 100%;
-    width: 0px;
-    border: 1px solid var(--principal-color);
-}
-
-.gen {
-    font-size: 1.25rem;
-    font-weight: 800;
-    margin-left: 10px;
-}
-
-.selector {
-    display: flex;
-    align-items: center;
-    gap: 5px;
 }
 
 .topic {
@@ -131,4 +106,37 @@ input:focus {
 /* Handle on hover */
 .generationList::-webkit-scrollbar-thumb:hover {
     background: var(--principal-color);
+}
+
+@media (max-width: 800px) {
+    .container {
+        padding: 12px;
+        max-width: 100vw;
+        overflow-x: hidden;
+    }
+
+    .barra_pesquisa{
+        height: 4.8025613660619vh;
+        width: 100%;
+        padding: 0px;
+        border-radius: 10px;
+    }
+
+    .buscador-container{
+        overflow: visible;
+    }
+
+    .buscador{
+        height: 100%;
+        border-radius: 0px 10px 10px 0px;
+    }
+
+    .bordinha{
+        display: none;
+    }
+
+    .fa-search {
+        font-size: 1.5rem;
+        margin-left: 5px;
+    }
 }

@@ -105,14 +105,13 @@ const getTypeColor = function (pokemon) {
     return bgColor;
 }
 
-const getPokemonId = async function (pokemonName) {
-    let pokemon = await getPokemon(pokemonName.name)
-    let id = pokemon.id.toString();
+const getPokemonId = function (pokemonId) {
+    let id = pokemonId
 
-    if (id.length < 2) {
-        id = `00${pokemon.id}`
-    } else if (id.length < 3) {
-        id = `0${pokemon.id}`
+    if (String(id).length < 2) {
+        id = `00${pokemonId}`
+    } else if (String(id).length < 3) {
+        id = `0${pokemonId}`
     }
 
     return id
@@ -120,19 +119,7 @@ const getPokemonId = async function (pokemonName) {
 
 export const buildPage = async () => {
     let selectedPokemon = await getPokemon(localStorage.getItem('pokemon'));
-
-    let catchPokemonSpecie = async function (pokemonName) {
-        let pokemon;
-
-        if (await getPokemonSpecie(pokemonName) !== 404) {
-            pokemon = await getPokemonSpecie(pokemonName)
-        } else {
-            pokemon = await getPokemonSpecie(selectedPokemon.id)
-        }
-        return pokemon
-    }
-
-    let selectedPokemonSpecie = await catchPokemonSpecie(localStorage.getItem('pokemon'))
+    let selectedPokemonSpecie = await getPokemonSpecie(localStorage.getItem('pokemon'))
 
     let getPokemonStats = function (pokemon) {
         let statsJSON = {};
@@ -163,7 +150,7 @@ export const buildPage = async () => {
     let pokeName = primeiraLetra + resto
 
     let info_container = document.getElementById('info-container')
-    info_container.style.backgroundColor = getTypeColor(selectedPokemon) + 'c4'
+    info_container.style.background = `${getTypeColor(selectedPokemon)}c4`
 
     let photo = selectedPokemon.sprites.other["official-artwork"].front_default
     let shinyPhoto = selectedPokemon.sprites.other["official-artwork"].front_shiny
@@ -171,16 +158,16 @@ export const buildPage = async () => {
     let pokemonPhoto = document.getElementById('pokemonPhoto')
     pokemonPhoto.style.background = `url(${photo}) no-repeat`
     pokemonPhoto.style.backgroundPosition = 'center'
-    pokemonPhoto.style.backgroundSize = 'contain'
+    pokemonPhoto.style.backgroundSize = 'cover'
 
     let shiny = document.getElementById('shiny')
     shiny.addEventListener('click', function () {
         if (photo == selectedPokemon.sprites.other["official-artwork"].front_default) {
             if (selectedPokemon.sprites.other["official-artwork"].front_shiny != null) {
                 photo = selectedPokemon.sprites.other["official-artwork"].front_shiny
-                pokemonPhoto.style.background = `url(${shinyPhoto}) no-repeat center`
+                pokemonPhoto.style.background = `url(${shinyPhoto}) no-repeat`
                 pokemonPhoto.style.backgroundPosition = 'center'
-                pokemonPhoto.style.backgroundSize = 'contain'
+                pokemonPhoto.style.backgroundSize = 'cover'
             }
         } else if (photo == selectedPokemon.sprites.other["official-artwork"].front_shiny) {
             photo = selectedPokemon.sprites.other["official-artwork"].front_default
@@ -191,7 +178,7 @@ export const buildPage = async () => {
     })
 
     let pokemonNumber = document.getElementById('number')
-    pokemonNumber.textContent = `#${await getPokemonId(selectedPokemon)}`
+    pokemonNumber.textContent = `#${getPokemonId(selectedPokemon.id)}`
 
     let pokemonName = document.getElementById('name')
     pokemonName.textContent = pokeName

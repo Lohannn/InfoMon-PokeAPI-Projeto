@@ -1,7 +1,7 @@
 'use strict'
 
 import { iniatilizePage } from "./generationList.js";
-import { loadPokemon } from "./pokemonList.js";
+import { iniatilizePokemon } from "./pokemonList.js";
 import { buildPage } from "./pokemonData.js";
 
 const routes = {
@@ -26,7 +26,7 @@ const handleLocation = async () => {
     if (window.location.pathname == '/') {
         iniatilizePage()
     } else if (window.location.pathname == '/pokemon-list') {
-        loadPokemon(localStorage.getItem('generation'))
+        iniatilizePokemon(localStorage.getItem('generation'))
     } else if (window.location.pathname == '/pokemon') {
         buildPage()
     }

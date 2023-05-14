@@ -23,8 +23,7 @@ const normal = getComputedStyle(document.documentElement).getPropertyValue('--no
 const electric = getComputedStyle(document.documentElement).getPropertyValue('--electric');
 const flying = getComputedStyle(document.documentElement).getPropertyValue('--flying');
 
-const getBackground = async function (pokemonName) {
-    let pokemon = await getPokemon(pokemonName)
+const getBackground = function (pokemon) {
     let bgColor;
 
     switch (pokemon.types[0].type.name) {
@@ -106,8 +105,7 @@ const getBackground = async function (pokemonName) {
     return bgColor;
 }
 
-const getPokemonIcon = async function (pokemonName) {
-    let pokemon = await getPokemon(pokemonName)
+const getPokemonIcon = function (pokemon) {
     let icon;
 
     if (pokemon.sprites.front_default != null) {
@@ -121,14 +119,13 @@ const getPokemonIcon = async function (pokemonName) {
     return icon
 }
 
-const getPokemonId = async function (pokemonName) {
-    let pokemon = await getPokemon(pokemonName)
-    let id = pokemon.id.toString();
+const getPokemonId = function (pokemonId) {
+    let id = pokemonId
 
-    if (id.length < 2) {
-        id = `00${pokemon.id}`
-    } else if (id.length < 3) {
-        id = `0${pokemon.id}`
+    if (String(id).length < 2) {
+        id = `00${pokemonId}`
+    } else if (String(id).length < 3) {
+        id = `0${pokemonId}`
     }
 
     return id
@@ -138,7 +135,7 @@ class card extends HTMLElement {
     constructor() {
         super()
         this.shadow = this.attachShadow({ mode: 'open' })
-        this.name = 'bulbasaur'
+        this.pokemon = {}
     }
 
     static get observedAttributes() {
@@ -150,11 +147,11 @@ class card extends HTMLElement {
     }
 
     async connectedCallback() {
-        this.shadow.appendChild(await this.component())
-        this.shadow.appendChild(await this.styles())
+        this.shadow.appendChild(this.component())
+        this.shadow.appendChild(this.styles())
     }
 
-    async styles() {
+    styles() {
         const css = document.createElement('style')
         css.textContent = `
             *{
@@ -172,7 +169,7 @@ class card extends HTMLElement {
                 height: 280px;
                 max-width: 282px;
                 max-height: 280px;
-                background-color: ${await getBackground(this.name)}c4;
+                background-color: ${getBackground(this.pokemon)}c4;
                 color: var(--principal-color);
                 border: 2px solid var(--principal-color);
                 border-radius: 10px;
@@ -204,7 +201,7 @@ class card extends HTMLElement {
                 height: 167px;
                 max-height: 167px;
                 border-radius: 100%;
-                background: url(${await getPokemonIcon(this.name)}), rgba(0, 0, 0, 0.77);
+                background: url(${getPokemonIcon(this.pokemon)}), rgba(0, 0, 0, 0.77);
                 background-repeat: no-repeat;
                 background-size: contain;
                 background-position: center;
@@ -221,23 +218,22 @@ class card extends HTMLElement {
         return css
     }
 
-    async component() {
-        let pokemon = await getPokemon(this.name)
+    component() {
 
-        let primeiraLetra = this.name.slice(0, 1).toUpperCase()
-        let resto = this.name.slice(1).toLowerCase()
+        let primeiraLetra = this.pokemon.name.slice(0, 1).toUpperCase()
+        let resto = this.pokemon.name.slice(1).toLowerCase()
         let pokeName = primeiraLetra + resto
 
         const card = document.createElement('a')
         card.classList.add('pokemon-card')
         card.addEventListener('click', (e) => {
-            localStorage.setItem('pokemon', this.name)
+            localStorage.setItem('pokemon', this.pokemon.id)
             route(e)
         })
         card.href = '/pokemon'
         const pokemonName = document.createElement('h2')
         pokemonName.classList.add('pokemon-name')
-        pokemonName.textContent = `#${await getPokemonId(this.name)} - ${pokeName.replace(/-/g, ' ')}`
+        pokemonName.textContent = `#${getPokemonId(this.pokemon.id)} - ${pokeName.replace(/-/g, ' ')}`
         pokemonName.href = '/pokemon'
         const pokemonIcon = document.createElement('div')
         pokemonIcon.classList.add('pokemon-icon')
@@ -248,7 +244,7 @@ class card extends HTMLElement {
 
         card.append(pokemonName, pokemonIcon, pokemonTypes)
 
-        pokemon.types.forEach(type => {
+        this.pokemon.types.forEach(type => {
             const typeCard = document.createElement('type-card')
             typeCard.type = type.type.name
 

@@ -3,6 +3,7 @@
     --secondary-color: #000;
     --principal-color: #F2DA03;
     --terciary-color: #FFF;
+    --defaul-padding: 24px;
 }
 
 body {

@@ -10,11 +10,36 @@ const list = async function (gen) {
 
   for (let index = 0; index < limit; index++) {
     if (await getPokemon(generation.pokemon_species[index].name) !== 404) {
-      pokeList.push(generation.pokemon_species[index].name)
+      let pokemon = await getPokemon(generation.pokemon_species[index].name)
+      pokeList.push(pokemon)
     } else {
       let pokemon = await getPokemon(generation.pokemon_species[index].url.replace(/https:|pokeapi.co|api|v2|pokemon-species|\//g, ''))
 
-      pokeList.push(pokemon.name)
+      pokeList.push(pokemon)
+    }
+
+  }
+
+  return pokeList
+}
+
+const filterPokemon = async (valor, gen) => {
+  let generation = await getGeneration(gen)
+  let limit = generation.pokemon_species.length
+  let pokeList = []
+  let value = new RegExp(valor.toLowerCase(), 'g')
+
+  for (let index = 0; index < limit; index++) {
+    if (await getPokemon(generation.pokemon_species[index].name) !== 404) {
+      let pokemon = await getPokemon(generation.pokemon_species[index].name)
+      if (String(pokemon.name).match(value)) {
+        pokeList.push(pokemon)
+      }
+    } else {
+      let pokemon = await getPokemon(generation.pokemon_species[index].url.replace(/https:|pokeapi.co|api|v2|pokemon-species|\//g, ''))
+      if (String(pokemon.name).match(value)) {
+        pokeList.push(pokemon)
+      }
     }
 
   }
@@ -24,7 +49,7 @@ const list = async function (gen) {
 
 const createPokemonCards = (pokemon) => {
   const card = document.createElement('pokemon-card')
-  card.name = pokemon
+  card.pokemon = pokemon
 
   return card
 }
@@ -43,12 +68,35 @@ function getContainer() {
   });
 }
 
-export const loadPokemon = async (gen) => {
-  console.log('Funcionou');
+const loadPokemon = async (list) => {
   const container = await getContainer()
 
-  let pokeList = await list(gen)
-  const cards = pokeList.map(createPokemonCards)
+  const cards = list.map(createPokemonCards)
+  container.style.background = 'none'
+  const inputPokemon = document.getElementById('buscadorPokemon')
+  inputPokemon.removeAttribute('readonly')
+  inputPokemon.setAttribute('placeholder', 'Procure um pokémon')
 
   container.replaceChildren(...cards)
+}
+
+export const iniatilizePokemon = async (gen) => {
+  await loadPokemon(await list(gen))
+
+  const searcher = document.getElementById('barra_pesquisa')
+  const inputPokemon = document.getElementById('buscadorPokemon')
+  inputPokemon.addEventListener('change', async () => {
+    searcher.style.backgroundColor = '#FFF'
+    inputPokemon.style.backgroundColor = '#FFF'
+    let value = inputPokemon.value.replace(' ', '')
+    if (value != '') {
+      await loadPokemon(await filterPokemon(value, gen))
+      searcher.style.backgroundColor = 'var(--primary-color)'
+      inputPokemon.style.backgroundColor = 'var(--primary-color)'
+    } else {
+      await loadPokemon(await list(gen))
+      searcher.style.backgroundColor = 'var(--primary-color)'
+      inputPokemon.style.backgroundColor = 'var(--primary-color)'
+    }
+  })
 }
