@@ -263,10 +263,6 @@ export const buildPage = async () => {
     max.style.width = `calc((100% * ${getPokemonStats(selectedPokemon).max_status}/1530) - 17%)`
     maxValue.textContent = getPokemonStats(selectedPokemon).max_status
 
-    let moveButton = document.getElementById('moveButton')
-    moveButton.style.backgroundColor = getTypeColor(selectedPokemon);
-    moveButton.style.backgroundColor = getTypeColor(selectedPokemon);
-
     let ability_container = document.getElementById('abilityList')
 
     selectedPokemon.abilities.forEach(ability => {

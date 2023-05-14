@@ -19,11 +19,36 @@
     --psychic: #d94ca5;
 }
 
+.loaderContainer{
+    min-height: 100%;
+    width: 100%;
+    position: relative;
+    overflow: hidden;
+}
+
+.loader{
+    background-color: tomato;
+    position: absolute;
+    width: 100%;
+    height: 104%;
+}
+
+.disappear{
+    animation: vanish 1s forwards;
+}
+
+@keyframes vanish{
+    100%{
+        opacity: 0;
+        visibility: hidden;
+    }
+}
+
 .list-container {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
-    gap: 24px 114px;
+    gap: 24px 113px;
     overflow-y: auto;
     overflow-x: hidden;
     max-height: 100%;
