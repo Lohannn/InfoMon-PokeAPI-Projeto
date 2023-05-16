@@ -158,7 +158,7 @@ export const buildPage = async () => {
     let pokemonPhoto = document.getElementById('pokemonPhoto')
     pokemonPhoto.style.background = `url(${photo}) no-repeat`
     pokemonPhoto.style.backgroundPosition = 'center'
-    pokemonPhoto.style.backgroundSize = 'cover'
+    pokemonPhoto.style.backgroundSize = 'contain'
 
     let shiny = document.getElementById('shiny')
     shiny.addEventListener('click', function () {
