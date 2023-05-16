@@ -167,7 +167,7 @@ export const buildPage = async () => {
                 photo = selectedPokemon.sprites.other["official-artwork"].front_shiny
                 pokemonPhoto.style.background = `url(${shinyPhoto}) no-repeat`
                 pokemonPhoto.style.backgroundPosition = 'center'
-                pokemonPhoto.style.backgroundSize = 'cover'
+                pokemonPhoto.style.backgroundSize = 'contain'
             }
         } else if (photo == selectedPokemon.sprites.other["official-artwork"].front_shiny) {
             photo = selectedPokemon.sprites.other["official-artwork"].front_default
