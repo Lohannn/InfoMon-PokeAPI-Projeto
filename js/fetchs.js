@@ -2,7 +2,7 @@
 
 export const getGeneration = async function (id) {
     const url = `https://pokeapi.co/api/v2/generation/${id}`
-    const response = await fetch(url)
+    const response = await fetch(url, {"User-Agent"   : "TEST"})
     var data = await response.json()
 
     return data = {
