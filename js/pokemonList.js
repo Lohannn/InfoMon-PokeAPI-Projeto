@@ -29,7 +29,6 @@ const list = async function (gen) {
     }
   });
 
-  console.log(sortedList);
   return sortedList
 }
 
