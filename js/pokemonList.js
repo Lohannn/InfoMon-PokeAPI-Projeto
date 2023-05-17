@@ -20,9 +20,17 @@ const list = async function (gen) {
 
   }
 
-  return  pokeList.sort(function (a, b) {
-    return a.id > b.id
+  let sortedList = pokeList.sort(function (a, b) {
+    if (a.id < b.id) {
+      return -1;
+    }
+    if (a.id > b.id) {
+      return 1;
+    }
   });
+
+  console.log(sortedList);
+  return sortedList
 }
 
 const filterPokemon = async (valor, gen) => {
