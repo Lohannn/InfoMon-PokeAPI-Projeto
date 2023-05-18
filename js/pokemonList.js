@@ -3,33 +3,53 @@
 import { getGeneration } from "./fetchs.js";
 import { getPokemon } from "./fetchs.js";
 
+function getContainer() {
+  return new Promise((resolve) => {
+    const checkContainer = () => {
+      const container = document.getElementById('list-container');
+      if (container) {
+        resolve(container);
+      } else {
+        setTimeout(checkContainer, 100);
+      }
+    };
+    checkContainer();
+  });
+}
+
 const list = async function (gen) {
   let generation = await getGeneration(gen)
-  let limit = generation.pokemon_species.length
-  let pokeList = []
 
-  for (let index = 0; index < limit; index++) {
-    if (await getPokemon(generation.pokemon_species[index].name) !== 404) {
-      let pokemon = await getPokemon(generation.pokemon_species[index].name)
-      pokeList.push(pokemon)
-    } else {
-      let pokemon = await getPokemon(generation.pokemon_species[index].url.replace(/https:|pokeapi.co|api|v2|pokemon-species|\//g, ''))
+  if (generation != 403) {
+    let limit = generation.pokemon_species.length
+    let pokeList = []
 
-      pokeList.push(pokemon)
+    for (let index = 0; index < limit; index++) {
+      if (await getPokemon(generation.pokemon_species[index].name) !== 404) {
+        let pokemon = await getPokemon(generation.pokemon_species[index].name)
+        pokeList.push(pokemon)
+      } else {
+        let pokemon = await getPokemon(generation.pokemon_species[index].url.replace(/https:|pokeapi.co|api|v2|pokemon-species|\//g, ''))
+
+        pokeList.push(pokemon)
+      }
+
     }
 
+    let sortedList = pokeList.sort(function (a, b) {
+      if (a.id < b.id) {
+        return -1;
+      }
+      if (a.id > b.id) {
+        return 1;
+      }
+    });
+
+    return sortedList
+  } else {
+    let container = await getContainer();
+    container.background = 'url("/img/403.png") center no-repeat contain'
   }
-
-  let sortedList = pokeList.sort(function (a, b) {
-    if (a.id < b.id) {
-      return -1;
-    }
-    if (a.id > b.id) {
-      return 1;
-    }
-  });
-
-  return sortedList
 }
 
 const filterPokemon = async (valor, gen) => {
@@ -61,20 +81,6 @@ const createPokemonCards = (pokemon) => {
   card.pokemon = pokemon
 
   return card
-}
-
-function getContainer() {
-  return new Promise((resolve) => {
-    const checkContainer = () => {
-      const container = document.getElementById('list-container');
-      if (container) {
-        resolve(container);
-      } else {
-        setTimeout(checkContainer, 100);
-      }
-    };
-    checkContainer();
-  });
 }
 
 const loadPokemon = async (list) => {

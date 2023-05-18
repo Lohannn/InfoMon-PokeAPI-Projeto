@@ -2,14 +2,20 @@
 
 export const getGeneration = async function (id) {
     const url = `https://pokeapi.co/api/v2/generation/${id}`
-    const response = await fetch(url, {"User-Agent"   : "TEST"})
-    var data = await response.json()
+    const response = await fetch(url, { "User-Agent": "TEST" })
 
-    return data = {
-        name: data.name,
-        region: data.main_region.name.toUpperCase(),
-        pokemon_species: data.pokemon_species
+    if (response.status != 200) {
+        return response.status
+    } else {
+        var data = await response.json()
+
+        return data = {
+            name: data.name,
+            region: data.main_region.name.toUpperCase(),
+            pokemon_species: data.pokemon_species
+        }
     }
+
 }
 
 export const getGenerationQuantity = async function () {
