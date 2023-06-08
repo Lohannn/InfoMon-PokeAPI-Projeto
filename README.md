@@ -1,7 +1,5 @@
 # InfoMon-PokeAPI-Projeto
 
-# Simpsons
-
 ## Sobre o Projeto
 
 Site criado com a proposta de utilizar e praticar Web Components, Route e consumo de APIs.
